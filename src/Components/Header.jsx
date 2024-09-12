@@ -1,21 +1,48 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import header from '../images/header.jpg'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import hat from "../images/hat.png";
 
 function Header() {
+  const [isFixed, setIsFixed] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 785) {
+      // Cambia el valor según cuándo quieras que se fije
+      setIsFixed(true);
+    } else {
+      setIsFixed(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <div className='header'>
-      <div className='header-image'>
-      <span className='title-red'>COOL<span className='title-white'>-</span><span className='title-green'>MEX</span></span>
-      <div className='menu'>
-      <Link to= "/menu"><span>MENU</span></Link>
-      <Link to= "/menu"><span>HOURS & LOCATION</span></Link>
-      <Link to= "/menu"><span>OUR STORY</span></Link>
-      <Link to= "/menu"><span>RESERVATIONS</span></Link>
-      </div>
+    <div className={`header ${isFixed ? "fixed" : ""}`}>
+      <span className="title-red">
+        COOL
+        <img src={hat} alt="logo" className="logo" />
+        <span className="title-green">MEX</span>
+      </span>
+      <div className="header-links">
+        <Link to="/menu" className="header-link">
+          <span>MENU</span>
+        </Link>
+        <Link to="/location" className="header-link">
+          <span>HOURS & LOCATION</span>
+        </Link>
+        <Link to="/our-story" className="header-link">
+          <span>OUR STORY</span>
+        </Link>
+        <Link to="/reservations" className="header-reservations">
+          <span>RESERVATIONS</span>
+        </Link>
       </div>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;
