@@ -22,11 +22,13 @@ function Header() {
   }, []);
   return (
     <div className={`header ${isFixed ? "fixed" : ""}`}>
+      <Link to="/" className="cool-mex-logo">
       <span className="title-red">
         COOL
         <img src={hat} alt="logo" className="logo" />
         <span className="title-green">MEX</span>
       </span>
+      </Link>
       <div className="header-links">
         <Link to="/menu" className="header-link">
           <span>MENU</span>

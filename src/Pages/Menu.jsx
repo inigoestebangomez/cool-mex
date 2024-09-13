@@ -9,6 +9,7 @@ function Menu() {
       <div className='menu-poster'>
         <span className='menu-text'>MENU</span>
       </div>
+      <div className='menus'>
       <div className='menu'>
         <div className='menu-container'>
         <h3>ENTRANTES</h3>
@@ -32,11 +33,13 @@ function Menu() {
         <h3>POSTRES</h3>
         <ul className='menu-info-main'>
             <li>AAAAAAAAAAA</li>
+            <li>Aaaaaaaaaaa</li>
             <li>AAAAAAAAAAA</li>
             <li>AAAAAAAAAAA</li>
-            <li>AAAAAAAAAAAA</li>
         </ul>
         </div>
+        </div>
+        <span className='price'>PVP: $24</span>
       </div>
       <Footer />
     </>
