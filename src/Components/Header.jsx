@@ -7,7 +7,7 @@ function Header() {
 
   const handleScroll = () => {
     if (window.scrollY > 785) {
-      // Cambia el valor según cuándo quieras que se fije
+      // Valor en px del eje Y, desde donde aparecerá el header
       setIsFixed(true);
     } else {
       setIsFixed(false);
