@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 
-function Form() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
+function Form({ customerName, customerEmail, phone, setCustomerName, setCustomerEmail, setPhone }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log({ name, email, number });
   };
 
   return (
@@ -17,22 +12,22 @@ function Form() {
         className="form"
         type="text"
         placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={customerName}
+        onChange={(e) => setCustomerName(e.target.value)}
       />
       <input
         className="form"
         type="email"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={customerEmail}
+        onChange={(e) => setCustomerEmail(e.target.value)}
       />
       <input
         className="form"
         type="number"
         placeholder="Phone number"
-        value={number}
-        onChange={(e) => setNumber(e.target.value)}
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
       />
     </form>
   );

@@ -1,25 +1,26 @@
 import React from 'react'
 import { useState } from 'react'
 
-function Place() {
+function Place({place, setPlace}) {
     const availablePlaces = [
         "Terrace",
         "Indoor",
       ];
-      const [place, setPlace] = useState("");
   return (
     <select 
       className="place"
       value={place} 
       onChange={(e) => setPlace(e.target.value)}>
-        {availablePlaces.map((place) => (
-          <option 
-          key={place} 
-          value={place}>
-            {place}
-          </option>
-        ))}
-      </select>
+        <option value="">Select a place</option>
+        {availablePlaces.map((placeOption) => (
+        <option 
+          key={placeOption} 
+          value={placeOption}
+        >
+          {placeOption}
+        </option>
+      ))}
+    </select>
   );
 }
 
