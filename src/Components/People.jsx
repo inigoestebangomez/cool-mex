@@ -10,6 +10,7 @@ function People({numGuests, setNumGuests}) {
       value={numGuests}
       onChange={(e) => setNumGuests(Number(e.target.value))}
     >
+      <option value="">Select People</option>
       {options.map((num) => (
         <option key={num} value={num}>
           {num} {num === 1 ? 'guest' : 'people'}

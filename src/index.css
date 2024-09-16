@@ -26,6 +26,8 @@
   --color-cream: rgb(252, 221, 174);
   --color-white: #ffffff;
   --color-black: #101010;
+  --color-grey-light: #d3d3d3;
+  --color-grey-light-2: #f0f0f0;
 
   --background-image-header-footer: url("./images/header.jpg");
   --background-image-menu: url("./images/menu.jpg");
@@ -246,12 +248,21 @@ li {
   font-size: 16px;
   font-family: var(--font-family-rye);
   color: var(--color-black);
+  margin-bottom: 12px;
 }
 .reservations-poster{
   font-family: var(--font-family-bevan);
   font-size: 42px;
   color: var(--color-red-tomato);
-  align-content: center;
+}
+.reservations-group{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+  justify-self: start;
+  height: 2.688rem;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 .reservations-image{
   background-image: url(./images/vertical.jpg);
@@ -262,13 +273,9 @@ li {
 }
 
 /* Estilos componente CALENDAR */
-.showing-date {
-  background-color: var(--color-green);
-  color: var(--color-white);
-  padding: 10px 10px 10px 10px;
-  border-radius: 4px;
-  font-family: var(--font-family-bevan);
-  font-size: 16px;
+.showing-date{
+  width: 14.688rem;
+  transform: translateY(-1.375rem);
 }
 .react-datepicker {
   font-family: var(--font-family-rye);
@@ -306,13 +313,13 @@ li {
 }
 
 .react-datepicker__day--disabled {
-  color: #d3d3d3; /* Color gris claro para las fechas deshabilitadas */
-  background-color: #f0f0f0; /* Fondo gris claro */
-  cursor: not-allowed; /* Cursor de no permitido */
+  color: var(--color-grey-light);
+  background-color: var(--color-grey-light-2);
+  cursor: not-allowed; 
 }
 
 .react-datepicker__day--disabled:hover {
-  background-color: #f0f0f0; /* Fondo gris claro */
+  background-color: var(--color-grey-light-2);
 }
 
 .react-datepicker__day--outside-month {
@@ -320,13 +327,14 @@ li {
 }
 
 /* Estilos componente TIME y PLACE */
-.time, .place, .guests {
+.time, .place, .guests, .showing-date {
   background-color: var(--color-green);
   color: var(--color-white);
   padding: 9px 24px 9px 24px;
   border-radius: 4px;
   font-family: var(--font-family-bevan);
   font-size: 16px;
+  height: 43px;
 }
 .time-timepicker {
   background-color: var(--color-white);
@@ -365,9 +373,7 @@ input:-ms-input-placeholder {
   font-style: italic;
 }
 /* Estilos para Comensales */
-.guests {
-  height: 45px;
-}
+
 
 /* Estilos para Botones */
 .btn-filled{

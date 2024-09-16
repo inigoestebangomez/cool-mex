@@ -8,6 +8,8 @@ import Form from "../Components/Form";
 import Place from "../Components/Place";
 import People from "../Components/People";
 import service from "../service/service.config";
+import { useNavigate } from "react-router-dom";
+
 
 function Reservation() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -16,8 +18,9 @@ function Reservation() {
   const [customerEmail, setCustomerEmail] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [phone, setPhone] = useState("");
-  const [place, setPlace] = useState("")
-  console.log(selectedDate, selectedTime, numGuests, customerName, customerEmail,phone, place )
+  const [place, setPlace] = useState("");
+
+  const navigate = useNavigate();
 
   const handleReservation = async () => {
     try {
@@ -32,13 +35,14 @@ function Reservation() {
         phone: phone,
         place: place,
       };
-      if (!selectedTime || !place || !numGuests) {
+      if (!selectedTime || !place || !numGuests || !phone || !customerEmail || !customerName) {
         alert("Please fill in all required fields.");
         return;
       }
       const response = await service.post("/reservation", reservationData);
       if (response.status === 201) {
-        alert("Reservation created successfully!");
+        alert("Reservation created successfully! Now you can see our menu!");
+        navigate("/menu")
       }
     } catch (error) {
       console.error("Error creating reservation:", error);
@@ -58,6 +62,7 @@ function Reservation() {
             <p>Choose a date and hour to join us</p>
             <p>Write your name and email.</p>
           </div>
+          <div className="reservations-group">
           <People numGuests={numGuests} setNumGuests={setNumGuests} />
           <Calendar selectedDate={selectedDate} onChange={setSelectedDate} />
           <Time
@@ -67,6 +72,7 @@ function Reservation() {
             selectedTime={selectedTime}
           />
           <Place place={place} setPlace={setPlace}/>
+          </div>
           <Form
             customerName={customerName}
             customerEmail={customerEmail}

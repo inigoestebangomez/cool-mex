@@ -11,7 +11,7 @@ function Place({place, setPlace}) {
       className="place"
       value={place} 
       onChange={(e) => setPlace(e.target.value)}>
-        <option value="">Select a place</option>
+        <option value="">Select Place</option>
         {availablePlaces.map((placeOption) => (
         <option 
           key={placeOption} 
