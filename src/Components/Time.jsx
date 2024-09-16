@@ -1,35 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import service from "../service/service.config";
 
-function Time() {
-  const availableTimes = [
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30",
-    "14:00",
-    "14:30",
-    "19:30",
-    "20:00",
-    "20:30",
-    "21:00",
-    "21:30",
-  ];
+
+function Time({ selectedDate, numGuests }) {
+  const [availableTimes, setAvailableTimes] = useState([]);
   const [time, setTime] = useState("");
 
+  useEffect(() => {
+    const fetchAvailableTimes = async () => {
+      try {
+        const formattedDate = new Date(selectedDate).toISOString().split('T')[0]; // Formato YYYY-MM-DD
+
+        const response = await service.get(`/reservation/availability/${formattedDate}/${numGuests}`);
+        
+        // Verificar la estructura de la respuesta completa
+        console.log("Response from backend:", response.data.availableTimes);
+    
+        // Acceder a los datos correctos en la propiedad `data`
+        setAvailableTimes(response.data.availableTimes || []);
+      } catch (error) {
+        console.error("Error fetching available times:", error);
+      }
+    };
+
+    if (selectedDate && numGuests) {
+      fetchAvailableTimes();
+    } else {
+      console.log("Date or number of guests is missing")
+    }
+  }, [selectedDate, numGuests]);
+
   return (
-      <select 
-      className="time"
-      value={time} 
-      onChange={(e) => setTime(e.target.value)}>
-        {availableTimes.map((time) => (
-          <option 
-          key={time} 
-          value={time}
-          className="time-timepicker">
+    <select 
+    className="time"
+    value={time}
+    onChange={(e) => setTime(e.target.value)}>
+
+      {availableTimes.length > 0 ? (
+        availableTimes.map((time) => (
+          <option key={time} value={time}>
             {time}
           </option>
-        ))}
-      </select>
+        ))
+      ) : (
+        <option>No available times</option>
+      )}
+    </select>
   );
 }
 

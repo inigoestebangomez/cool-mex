@@ -306,7 +306,7 @@ li {
 }
 
 /* Estilos componente TIME y PLACE */
-.time, .place {
+.time, .place, .guests {
   background-color: var(--color-green);
   color: var(--color-white);
   padding: 9px 24px 9px 24px;
@@ -349,6 +349,11 @@ input:-moz-placeholder {
 input:-ms-input-placeholder {
   color: var(--color-white);
   font-style: italic;
+}
+/* Estilos para Comensales */
+.guests {
+  width: 250px;
+  height: 45px;
 }
 
 /* Estilos para Botones */
