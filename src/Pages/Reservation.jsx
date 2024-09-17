@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,7 +10,6 @@ import People from "../Components/People";
 import service from "../service/service.config";
 import { useNavigate } from "react-router-dom";
 
-
 function Reservation() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [numGuests, setNumGuests] = useState("");
@@ -19,11 +18,19 @@ function Reservation() {
   const [selectedTime, setSelectedTime] = useState("");
   const [phone, setPhone] = useState("");
   const [place, setPlace] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [shakeError, setShakeError] = useState(false);
 
   const navigate = useNavigate();
 
   const handleReservation = async () => {
     try {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(customerEmail)) {
+        setErrorMessage("Please enter a valid email address.");
+        setShakeError(true);
+        return;
+      }
       const formattedDate = selectedDate.toISOString().split("T")[0];
       
       const reservationData = {
@@ -36,19 +43,33 @@ function Reservation() {
         place: place,
       };
       if (!selectedTime || !place || !numGuests || !phone || !customerEmail || !customerName) {
-        alert("Please fill in all required fields.");
+        setErrorMessage("Please fill in all required fields.");
+        setShakeError(true);
         return;
       }
       const response = await service.post("/reservation", reservationData);
       if (response.status === 201) {
         alert("Reservation created successfully! Now you can see our menu!");
+        setErrorMessage("")
         navigate("/menu")
       }
     } catch (error) {
-      console.error("Error creating reservation:", error);
-      alert("Failed to create the reservation. Please try again.");
+      // mensaje de error desde el backend
+      if (error.response && error.response.data && error.response.data.message) {
+        setErrorMessage(error.response.data.message); // Mostrar el mensaje de error
+      } else {
+        setErrorMessage("Failed to create the reservation. Please try again.");
+        setShakeError(true);
+      }
     }
   };
+  
+  useEffect(() => {
+    if (shakeError) {
+      const timer = setTimeout(() => setShakeError(false), 600); // Duración
+      return () => clearTimeout(timer);
+    }
+  }, [shakeError]);
 
   return (
     <>
@@ -56,12 +77,6 @@ function Reservation() {
       <div className="reservations">
         <div className="reservations-poster">
           <span>RESERVATIONS</span>
-          <div className="reservations-instructions">
-            <p>Booking a table:</p>
-            <p>Select how many people will come</p>
-            <p>Choose a date and hour to join us</p>
-            <p>Write your name and email.</p>
-          </div>
           <div className="reservations-group">
           <People numGuests={numGuests} setNumGuests={setNumGuests} />
           <Calendar selectedDate={selectedDate} onChange={setSelectedDate} />
@@ -81,6 +96,11 @@ function Reservation() {
             setCustomerEmail={setCustomerEmail}
             setPhone={setPhone}
           />
+          {errorMessage && (
+            <div className={`error-message ${shakeError ? "shake" : ""}`}>
+              {errorMessage}
+            </div>
+          )}
           <button className="btn-filled" onClick={handleReservation}>
             Book!
           </button>

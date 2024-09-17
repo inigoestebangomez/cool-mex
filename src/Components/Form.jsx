@@ -19,6 +19,7 @@ function Form({ customerName, customerEmail, phone, setCustomerName, setCustomer
         className="form"
         type="email"
         placeholder="Email"
+        autoComplete="current-email"
         value={customerEmail}
         onChange={(e) => setCustomerEmail(e.target.value)}
       />
